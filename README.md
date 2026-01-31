@@ -11,17 +11,26 @@ O objetivo deste projeto é agregar diversos scripts (Bash, Python, etc.) em um 
 Atualmente, o repositório contém:
 
 - `setup_git.sh`: Script para configuração básica do Git.
-- `setup_dual_git.sh`: Script para configurar múltiplos remotos (GitHub e GitLab) simultaneamente.
-- Outros scripts em desenvolvimento...
+- `setup_dual_git_v2.sh`: Script avançado para configurar múltiplos remotos (GitHub e GitLab) com push unificado em um único comando.
 
 ## 🛠️ Como usar
 
-Cada script possui sua própria funcionalidade. Geralmente, você pode executá-los via terminal:
+### Configuração Automática (Dual Git)
+
+Para configurar um novo projeto ou um projeto existente para sincronizar com GitHub e GitLab simultaneamente:
 
 ```bash
-chmod +x nome_do_script.sh
-./nome_do_script.sh
+chmod +x setup_dual_git_v2.sh
+./setup_dual_git_v2.sh /caminho/do/meu/projeto
 ```
+
+### Fluxo de Trabalho
+
+Após a configuração, você terá os seguintes comandos de envio:
+
+1. **`git push origin`**: Envia o código para **GitHub e GitLab** ao mesmo tempo. (Recomendado)
+2. **`git push github`**: Envia apenas para o GitHub.
+3. **`git push gitlab`**: Envia apenas para o GitLab.
 
 ## 📄 Licença
 
