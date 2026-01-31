@@ -6,15 +6,15 @@ Uma coleção centralizada de scripts utilitários para diversos fins (Bash, Pyt
 
 ## 📂 Organização do Repositório
 
-### 🔧 Utilitários de Git e Sincronização
-Estes scripts ajudam a manter o repositório organizado e sincronizado automaticamente.
+### 🔧 Gestão e Manutenção
+Estes scripts ajudam a manter o sistema saudável e o Git sincronizado.
 
 | Ficheiro | Função |
 | :--- | :--- |
+| `ops.sh` | **Centro de Operações**. Diagnóstico rápido de RAM, Disco, CPU e limpeza. |
 | `setup_dual_git_v2.sh` | Configura o projeto para enviar commits para GitHub e GitLab simultaneamente. |
-| `git_autosync.sh` | Monitor que faz o push automático dos commits pendentes quando detecta internet. |
-| `install_service.sh` | Instalador que configura o auto-sync como um serviço de sistema (Daemon). |
-| `setup_git.sh` | Script básico para configurações de identidade Git. |
+| `git_autosync.sh` | Monitor que faz o push automático dos commits pendentes. |
+| `install_service.sh` | Instalador do serviço de auto-sync (Daemon). |
 
 ### � Outros Scripts
 *(Novos scripts utilitários serão agregados aqui)*
