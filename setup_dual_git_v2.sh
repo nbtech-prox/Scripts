@@ -34,8 +34,8 @@ else
     echo -e "${GREEN}✔ Repositório Git existente detectado.${NC}"
 fi
 
-# 3. Configuração de Identidades
-echo -e "\n${CYAN}⚙ Configurando identidades...${NC}"
+# 3. Configuração de Identidades e Comportamento
+echo -e "\n${CYAN}⚙ Configurando identidades e automatismos...${NC}"
 
 # GitHub Global
 git config --global user.name "NBTech"
@@ -45,8 +45,12 @@ git config --global user.email "nbtech.prox@gmail.com"
 git config --local user.name "Nuno Batista"
 git config --local user.email "nbtech.git@gmail.com"
 
+# Automatismo: Evita o erro de "no upstream branch"
+git config --global push.autoSetupRemote true
+
 echo -e "  - GitHub (Global): ${GREEN}NBTech${NC}"
 echo -e "  - GitLab (Local):  ${GREEN}Nuno Batista${NC}"
+echo -e "  - Auto-Upstream:   ${GREEN}Ativado${NC}"
 
 # 4. Detecção de URLs Atuais
 CURRENT_GH=$(git remote get-url github 2>/dev/null || git remote get-url origin 2>/dev/null)
