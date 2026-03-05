@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # =================================================================
-# Script: Setup Dual Git Pro (GitHub + GitLab)
-# Versão: 2.0
-# Descrição: Configuração automática de identidades e remotos duplos
+# Script: Setup Triple Git Pro (GitHub + GitLab + Codeberg)
+# Versão: 2.1
+# Descrição: Configuração automática de identidades e remotos triplos
 # =================================================================
 
 # Cores para uma interface "premium" no terminal
@@ -15,7 +15,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}=======================================${NC}"
-echo -e "${BLUE}   SINCRO-GIT: GITHUB + GITLAB v2.0    ${NC}"
+echo -e "${BLUE} SINCRO-GIT: GITHUB + GITLAB + CODEBERG ${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
 # 1. Validação do Caminho (Usa diretório atual se não passado como argumento)
@@ -41,20 +41,22 @@ echo -e "\n${CYAN}⚙ Configurando identidades e automatismos...${NC}"
 git config --global user.name "NBTech"
 git config --global user.email "nbtech.prox@gmail.com"
 
-# GitLab Local
-git config --local user.name "Nuno Batista"
+# GitLab + Codeberg Local
+git config --local user.name "NBTech"
 git config --local user.email "nbtech.git@gmail.com"
 
 # Automatismo: Evita o erro de "no upstream branch"
 git config --global push.autoSetupRemote true
 
 echo -e "  - GitHub (Global): ${GREEN}NBTech${NC}"
-echo -e "  - GitLab (Local):  ${GREEN}Nuno Batista${NC}"
+echo -e "  - GitLab (Local):  ${GREEN}NBTech${NC}"
+echo -e "  - Codeberg (Local): ${GREEN}NBTech${NC}"
 echo -e "  - Auto-Upstream:   ${GREEN}Ativado${NC}"
 
 # 4. Detecção de URLs Atuais
 CURRENT_GH=$(git remote get-url github 2>/dev/null || git remote get-url origin 2>/dev/null)
 CURRENT_GL=$(git remote get-url gitlab 2>/dev/null)
+CURRENT_CB=$(git remote get-url codeberg 2>/dev/null)
 
 echo -e "\n${CYAN}🔗 Configuração de Remotos:${NC}"
 echo -e "${YELLOW}(Pressione ENTER para manter a URL atual)${NC}"
@@ -76,8 +78,12 @@ read -p "➔ GitLab SSH URL [${CURRENT_GL}]: " GITLAB_URL
 GITLAB_URL="${GITLAB_URL:-$CURRENT_GL}"
 [ -n "$GITLAB_URL" ] && validate_ssh "$GITLAB_URL"
 
-if [ -z "$GITHUB_URL" ] || [ -z "$GITLAB_URL" ]; then
-    echo -e "${RED}✘ Erro: Ambas as URLs são necessárias para o setup dual.${NC}"
+read -p "➔ Codeberg SSH URL [${CURRENT_CB}]: " CODEBERG_URL
+CODEBERG_URL="${CODEBERG_URL:-$CURRENT_CB}"
+[ -n "$CODEBERG_URL" ] && validate_ssh "$CODEBERG_URL"
+
+if [ -z "$GITHUB_URL" ] || [ -z "$GITLAB_URL" ] || [ -z "$CODEBERG_URL" ]; then
+    echo -e "${RED}✘ Erro: As três URLs são necessárias para o setup triplo.${NC}"
     exit 1
 fi
 
@@ -94,18 +100,21 @@ setup_remote() {
 # Remotos Individuais
 setup_remote "github" "$GITHUB_URL"
 setup_remote "gitlab" "$GITLAB_URL"
+setup_remote "codeberg" "$CODEBERG_URL"
 
 # Remoto Mestre (Origin) com Multi-Push
 setup_remote "origin" "$GITHUB_URL"
 git remote set-url --push --add origin "$GITHUB_URL"
 git remote set-url --push --add origin "$GITLAB_URL"
+git remote set-url --push --add origin "$CODEBERG_URL"
 
 # 6. Finalização
 echo -e "\n${GREEN}=======================================${NC}"
 echo -e "${GREEN}   ✔ SETUP CONCLUÍDO COM SUCESSO!      ${NC}"
 echo -e "${GREEN}=======================================${NC}"
 echo -e "Comandos de Push Disponíveis:"
-echo -e "1. ${YELLOW}git push origin${NC}  -> 🚄 Envia para ambos (GitHub + GitLab)"
+echo -e "1. ${YELLOW}git push origin${NC}  -> 🚄 Envia para os três (GitHub + GitLab + Codeberg)"
 echo -e "2. ${YELLOW}git push github${NC}  -> 🐙 Envia apenas para o GitHub"
 echo -e "3. ${YELLOW}git push gitlab${NC}  -> 🦊 Envia apenas para o GitLab"
+echo -e "4. ${YELLOW}git push codeberg${NC} -> 🏔 Envia apenas para o Codeberg"
 echo -e "=======================================\n"

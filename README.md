@@ -12,7 +12,7 @@ Estes scripts ajudam a manter o sistema saudável e o Git sincronizado.
 | Ficheiro | Função |
 | :--- | :--- |
 | `ops.sh` | **Centro de Operações**. Diagnóstico rápido de RAM, Disco, CPU e limpeza. |
-| `setup_dual_git_v2.sh` | Configura o projeto para enviar commits para GitHub e GitLab simultaneamente. |
+| `setup_multi_git_v3.sh` | Configura o projeto para enviar commits para GitHub, GitLab e Codeberg simultaneamente. |
 | `git_autosync.sh` | Monitor que faz o push automático dos commits pendentes. |
 | `install_service.sh` | Instalador do serviço de auto-sync (Daemon). |
 
@@ -25,12 +25,12 @@ Estes scripts ajudam a manter o sistema saudável e o Git sincronizado.
 
 ## 🛠️ Como Utilizar as Ferramentas
 
-### Sincronização Automática entre GitHub e GitLab
+### Sincronização Automática entre GitHub, GitLab e Codeberg
 Se deseja usar os automatismos de Git incluídos neste repositório:
 
-1.  **Configurar Remotos Duplos**:
+1.  **Configurar Remotos Triplos**:
     ```bash
-    ./setup_dual_git_v2.sh /caminho/do/projeto
+    ./setup_multi_git_v3.sh /caminho/do/projeto
     ```
 2.  **Ativar Sincronização em Segundo Plano (Opcional)**:
     ```bash
@@ -40,7 +40,7 @@ Se deseja usar os automatismos de Git incluídos neste repositório:
 ### Workflow com o Vigilante Git (Daemon)
 1.  **Trabalho**: Faça as suas alterações e use `git commit`. 
 2.  **Sincronização**: O serviço `git-autosync` envia os commits sozinho assim que houver rede.
-3.  **Manual**: Pode sempre usar `git push origin` para enviar imediatamente para ambos os remotos.
+3.  **Manual**: Pode sempre usar `git push origin` para enviar imediatamente para os remotos configurados.
 
 ---
 
