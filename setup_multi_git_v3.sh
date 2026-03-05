@@ -61,10 +61,11 @@ CURRENT_CB=$(git remote get-url codeberg 2>/dev/null)
 echo -e "\n${CYAN}🔗 Configuração de Remotos:${NC}"
 echo -e "${YELLOW}(Pressione ENTER para manter a URL atual)${NC}"
 
-# Função para validar se a URL é SSH (formato básico)
+# Função para validar se a URL é SSH (scp-like ou ssh://)
 validate_ssh() {
-    if [[ ! $1 =~ ^git@.* ]]; then
-        echo -e "${RED}⚠ Aviso: A URL não parece estar no formato SSH (git@...).${NC}"
+    if [[ ! $1 =~ ^git@[^:]+:.+ ]] && [[ ! $1 =~ ^ssh://git@[^/]+/.+ ]]; then
+        echo -e "${RED}⚠ Aviso: A URL não parece estar num formato SSH válido.${NC}"
+        echo -e "${RED}Use: git@host:org/repo.git ou ssh://git@host/org/repo.git${NC}"
         echo -e "${RED}Isso pode causar problemas com autenticação automática.${NC}"
     fi
 }
